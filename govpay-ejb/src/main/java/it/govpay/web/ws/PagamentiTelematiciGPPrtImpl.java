@@ -87,7 +87,7 @@ import org.openspcoop2.utils.logger.beans.proxy.Actor;
 endpointInterface = "it.govpay.servizi.PagamentiTelematiciGPPrt",
 targetNamespace = "http://www.govpay.it/servizi/",
 portName = "GPPrtPort",
-wsdlLocation = "classpath:wsdl/GpPrt.wsdl")
+wsdlLocation = "/wsdl/GpPrt.wsdl")
 
 @HandlerChain(file="../../../../handler-chains/handler-chain-gpws.xml")
 
