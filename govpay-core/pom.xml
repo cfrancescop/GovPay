@@ -81,11 +81,11 @@
 			<artifactId>commons-pool2</artifactId>
 		</dependency>
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>eu.europa.ec.joinup.sd-dss</groupId>
 			<artifactId>dss-common</artifactId>
 			<version>${dss-version}</version>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>eu.europa.ec.joinup.sd-dss</groupId>
