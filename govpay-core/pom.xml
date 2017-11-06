@@ -24,6 +24,7 @@
 
 	<properties>
 		<rel-to-parent>..</rel-to-parent>
+		<dss-version>4.7.0</dss-version>
 	</properties>
 
 	<dependencies>
@@ -83,13 +84,13 @@
 		<dependency>
 			<groupId>eu.europa.ec.joinup.sd-dss</groupId>
 			<artifactId>dss-common</artifactId>
-			<version>4.2.0-RC</version>
+			<version>${dss-version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>eu.europa.ec.joinup.sd-dss</groupId>
 			<artifactId>dss-document</artifactId>
-			<version>4.2.0-RC</version>
+			<version>${dss-version}</version>
 		</dependency>
 		
 		<dependency>
