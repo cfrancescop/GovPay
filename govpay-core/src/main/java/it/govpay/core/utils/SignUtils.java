@@ -43,12 +43,15 @@ import org.bouncycastle.cms.CMSSignedData;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-import eu.europa.ec.markt.dss.signature.DSSDocument;
-import eu.europa.ec.markt.dss.signature.InMemoryDocument;
-import eu.europa.ec.markt.dss.validation102853.CommonCertificateVerifier;
-import eu.europa.ec.markt.dss.validation102853.CommonTrustedCertificateSource;
-import eu.europa.ec.markt.dss.validation102853.SignedDocumentValidator;
-import eu.europa.ec.markt.dss.validation102853.report.Reports;
+import eu.europa.esig.dss.DSSDocument;
+import eu.europa.esig.dss.InMemoryDocument;
+import eu.europa.esig.dss.validation.CommonCertificateVerifier;
+import eu.europa.esig.dss.validation.SignedDocumentValidator;
+import eu.europa.esig.dss.validation.reports.Reports;
+import eu.europa.esig.dss.x509.CertificateToken;
+import eu.europa.esig.dss.x509.CommonTrustedCertificateSource;
+
+
 
 public class SignUtils {
 	
@@ -86,28 +89,5 @@ public class SignUtils {
 		CMSSignedData cms = new CMSSignedData(rt);
 		return ((byte[]) cms.getSignedContent().getContent());
 	}
-		
-	public static byte[] verifySignedFile(byte[] rt) throws KeyStoreException, CMSException, IOException {	
-		DSSDocument signedDocument = new InMemoryDocument(rt);
-		SignedDocumentValidator validator = SignedDocumentValidator.fromDocument(signedDocument);
-
-		CommonCertificateVerifier verifier = new CommonCertificateVerifier(true);
-
-		ProtectionParameter loadProtection = new PasswordProtection(GovpayConfig.getInstance().getKsPassword().toCharArray());
-		KeyStore ks = KeyStore.Builder.newInstance(
-				KeyStore.getDefaultType(),
-				null,
-				new File(GovpayConfig.getInstance().getKsLocation()),
-				loadProtection).getKeyStore();
-
-		X509Certificate cert = (X509Certificate) ks.getCertificate(GovpayConfig.getInstance().getKsAlias());
-
-		final CommonTrustedCertificateSource commonTrustedCertificateSource = new CommonTrustedCertificateSource();
-		commonTrustedCertificateSource.addCertificate(cert);
-		verifier.setTrustedCertSource(commonTrustedCertificateSource);
-		validator.setCertificateVerifier(verifier);
-
-		Reports reports = validator.validateDocument();
-		return reports.getDetailedReport().getText().getBytes();
-	}       
+	    
 }
