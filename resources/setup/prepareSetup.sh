@@ -1,4 +1,6 @@
-VERSION=2.4.3
+VERSION=2.4.4
+
+mvn -f ../../pom.xml -Denv=installer_template clean install
 
 # Directory
 COPYING_FILE=../../COPYING
