@@ -12,96 +12,113 @@
 	<artifactId>govpay-stampe</artifactId>
 	<packaging>jar</packaging>
 	<name>GovPay Stampe</name>
-	
+
 	<properties>
 		<rel-to-parent>..</rel-to-parent>
 	</properties>
 
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/xalan/xalan -->
+		<dependency>
+			<groupId>xalan</groupId>
+			<artifactId>xalan</artifactId>
+			<version>2.7.1</version>
+		</dependency>
+
 		<dependency>
 			<groupId>it.govpay</groupId>
 			<artifactId>govpay-orm-beans</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>it.govpay</groupId>
 			<artifactId>govpay-core-beans</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-1.2-api</artifactId>
 		</dependency>
-		
-		
-		 <dependency>
-            <groupId>net.sourceforge.dynamicreports</groupId>
-            <artifactId>dynamicreports-core</artifactId>
-            <version>4.1.1</version>
-            <exclusions>
-                    <exclusion>
-                            <artifactId>core</artifactId>
-                            <groupId>com.google.zxing</groupId>
-                    </exclusion>
-                    <exclusion>
-                            <artifactId>bcprov-jdk14</artifactId>
-                            <groupId>bouncycastle</groupId>
-                    </exclusion>
-                    <exclusion>
-                    	<groupId>com.fasterxml.jackson.core</groupId>
-                    	<artifactId>jackson-databind</artifactId>
-                    </exclusion>
-                    <exclusion>
-                    	<groupId>com.fasterxml.jackson.core</groupId>
-                    	<artifactId>jackson-annotations</artifactId>
-                    </exclusion>
-                    <exclusion>
-                    	<groupId>com.fasterxml.jackson.core</groupId>
-                    	<artifactId>jackson-core</artifactId>
-                    </exclusion>
-            </exclusions>
-    	</dependency>
-    	
-	    <dependency>
-	        <groupId>com.google.zxing</groupId>
-	        <artifactId>javase</artifactId>
-	        <version>2.2</version>
-		</dependency>
-		
+
+
 		<dependency>
-		  <groupId>org.iban4j</groupId>
-		  <artifactId>iban4j</artifactId>
-		  <version>3.2.1</version>
+			<groupId>net.sourceforge.dynamicreports</groupId>
+			<artifactId>dynamicreports-core</artifactId>
+			<version>4.1.1</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>core</artifactId>
+					<groupId>com.google.zxing</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>bcprov-jdk14</artifactId>
+					<groupId>bouncycastle</groupId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-databind</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-annotations</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-core</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>org.apache.xmlgraphics</groupId>
-		    <artifactId>xmlgraphics-commons</artifactId>
-		    <version>2.1</version>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>2.2</version>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>org.codehaus.groovy</groupId>
-		    <artifactId>groovy-all</artifactId>
-		    <version>2.4.5</version>
+			<groupId>org.iban4j</groupId>
+			<artifactId>iban4j</artifactId>
+			<version>3.2.1</version>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>net.sourceforge.barbecue</groupId>
-		    <artifactId>barbecue</artifactId>
-		    <version>1.5-beta1</version>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>xmlgraphics-commons</artifactId>
+			<version>2.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<version>2.4.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sourceforge.barbecue</groupId>
+			<artifactId>barbecue</artifactId>
+			<version>1.5-beta1</version>
 		</dependency>
 	</dependencies>
 
 	<build>
 		<filters>
-			<filter>../resources/filters/${env}.filter.properties</filter>	
+			<filter>../resources/filters/${env}.filter.properties</filter>
 		</filters>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 				<excludes>
+					<exclude>**/jasperreports_extension.properties</exclude>
+					<exclude>**/fonts/fontsfamily1511798380019.xml</exclude>
+					<exclude>**/*.ttf</exclude>
 					<exclude>*.jasper</exclude>
 				</excludes>
 			</resource>
@@ -109,7 +126,10 @@
 				<directory>src/main/resources</directory>
 				<filtering>false</filtering>
 				<includes>
-					<include>*.jasper</include>				
+					<include>**/jasperreports_extension.properties</include>
+					<include>**/fonts/fontsfamily1511798380019.xml</include>
+					<include>**/*.ttf</include>
+					<include>*.jasper</include>
 				</includes>
 			</resource>
 		</resources>

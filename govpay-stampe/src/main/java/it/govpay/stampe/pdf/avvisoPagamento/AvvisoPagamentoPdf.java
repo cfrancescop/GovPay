@@ -1,8 +1,10 @@
 package it.govpay.stampe.pdf.avvisoPagamento;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +14,8 @@ import java.util.Properties;
 import org.apache.logging.log4j.Logger;
 import org.openspcoop2.utils.UtilsException;
 import org.openspcoop2.utils.beans.WriteToSerializerType;
+
+import com.google.zxing.common.BitMatrix;
 
 import it.govpay.model.avvisi.AvvisoPagamento;
 import it.govpay.model.avvisi.AvvisoPagamentoInput;
@@ -28,7 +32,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
 public class AvvisoPagamentoPdf {
 
 	private static AvvisoPagamentoPdf _instance = null;
-
+	private static final Logger log = org.apache.logging.log4j.LogManager.getLogger(AvvisoPagamentoPdf.class);
 	public static AvvisoPagamentoPdf getInstance() {
 		if(_instance == null)
 			init();
@@ -45,6 +49,20 @@ public class AvvisoPagamentoPdf {
 
 	}
 	
+	public void exportToStream(AvvisoPagamentoInput input,String codDominio,OutputStream outputStream) throws Exception {
+		InputStream jasperTemplateInputStream =this.getClass().getResourceAsStream("/AvvisoPagamento.jasper");// new FileInputStream("/home/pintori/Downloads/Jasper_1/AvvisoPagamento.jasper");
+		final Map<String, Object> parameters = new HashMap<>();
+		Properties propertiesAvvisoPerDominio;
+		propertiesAvvisoPerDominio = AvvisoPagamentoProperties.getInstance().getPropertiesPerDominio(codDominio, log);
+		caricaLoghiAvviso(input, propertiesAvvisoPerDominio);
+		JRDataSource dataSource = creaXmlDataSource(input);
+		BitMatrix matrix = new com.google.zxing.qrcode.QRCodeWriter().encode(
+				input.getAvvisoQrcode(), com.google.zxing.BarcodeFormat.QR_CODE, 300, 300);
+		BufferedImage bufferedImage = com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(matrix);
+		parameters.put("qr_code", bufferedImage);
+		JasperPrint jasperPrint = creaJasperPrintAvviso( jasperTemplateInputStream, dataSource,parameters);
+		JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
+	}
 	
 	public JasperPrint creaJasperPrintAvviso(InputStream jasperTemplateInputStream,
 			JRDataSource dataSource,Map<String, Object> parameters) throws Exception {
@@ -68,7 +86,7 @@ public class AvvisoPagamentoPdf {
 
 		InputStream is = AvvisoPagamentoPdf.class.getResourceAsStream(jasperTemplateFilename);
 		Map<String, Object> parameters = new HashMap<>();
-		JRDataSource dataSource = creaXmlDataSource(log,input);
+		JRDataSource dataSource = creaXmlDataSource(input);
 		JasperPrint jasperPrint = creaJasperPrintAvviso( is, dataSource,parameters);
 
 		byte[] reportToPdf = JasperExportManager.exportReportToPdf(jasperPrint);
@@ -83,25 +101,27 @@ public class AvvisoPagamentoPdf {
 	 * @throws UtilsException
 	 * @throws JRException
 	 */
-	public JRDataSource creaXmlDataSource(Logger log,AvvisoPagamentoInput input) throws UtilsException, JRException {
+	public JRDataSource creaXmlDataSource(AvvisoPagamentoInput input) throws UtilsException, JRException {
 		WriteToSerializerType serType = WriteToSerializerType.JAXB;
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		input.writeTo(os, serType);
-		Object[] params = {input};
-		//return new net.sf.jasperreports.engine.data.JRBeanArrayDataSource(params);
 		byte[] byteArray = os.toByteArray();
-		System.out.println(new String(byteArray));
 		return new JRXmlDataSource(new ByteArrayInputStream(byteArray),AvvisoPagamentoCostanti.AVVISO_PAGAMENTO_ROOT_ELEMENT_NAME);
 		//return dataSource;
 	}
 	
-	public JRDataSource creaCustomDataSource(Logger log,AvvisoPagamentoInput input) throws UtilsException, JRException {
+	public JRDataSource creaCustomDataSource(AvvisoPagamentoInput input) throws UtilsException, JRException {
 		List<AvvisoPagamentoInput> listaAvvisi = new ArrayList<AvvisoPagamentoInput>();
 		listaAvvisi.add(input);
 		JRDataSource dataSource = new AvvisoPagamentoDatasource(listaAvvisi,log);
 		return dataSource;
 	}
 	
+	/**
+	 * TODO convertire ad immagini caricare da resource ed inserite nei parametri
+	 * @param input
+	 * @param propertiesAvvisoPerDominio
+	 */
 	public void caricaLoghiAvviso(AvvisoPagamentoInput input, Properties propertiesAvvisoPerDominio) {
 		// valorizzo la sezione loghi
 		input.setEnteLogo(propertiesAvvisoPerDominio.getProperty(AvvisoPagamentoCostanti.LOGO_ENTE));
