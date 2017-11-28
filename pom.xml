@@ -13,10 +13,13 @@
 		<module>govpay-core-beans</module>
 		<module>govpay-stampe</module>
 		<module>govpay-core</module>
+		<module>stampe-ws</module>
+		<!-- 
 		<module>govpay-ejb</module>
 		<module>govpay-web</module>
 		<module>govpay-ear</module>
-		<module>govpay-web-console</module>
+		<module>govpay-web-console</module> 
+		-->
 	</modules>
 
 	<profiles>

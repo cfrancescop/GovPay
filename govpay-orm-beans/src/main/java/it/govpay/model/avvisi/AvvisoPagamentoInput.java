@@ -385,7 +385,7 @@ public class AvvisoPagamentoInput extends org.openspcoop2.utils.beans.BaseBean i
   public void setAvvisoBarcode(java.lang.String avvisoBarcode) {
     this.avvisoBarcode = avvisoBarcode;
   }
-
+ 
   public java.lang.String getAvvisoQrcode() {
     return this.avvisoQrcode;
   }

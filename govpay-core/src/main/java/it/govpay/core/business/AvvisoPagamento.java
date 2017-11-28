@@ -27,8 +27,8 @@ import it.govpay.model.Anagrafica;
 import it.govpay.model.Intermediario;
 import it.govpay.model.avvisi.AvvisoPagamento.StatoAvviso;
 import it.govpay.model.avvisi.AvvisoPagamentoInput;
-import it.govpay.stampe.pdf.avvisoPagamento.AvvisoPagamentoPdf;
-import it.govpay.stampe.pdf.avvisoPagamento.utils.AvvisoPagamentoProperties;
+//import it.govpay.stampe.pdf.avvisoPagamento.AvvisoPagamentoPdf;
+//import it.govpay.stampe.pdf.avvisoPagamento.utils.AvvisoPagamentoProperties;
 
 public class AvvisoPagamento extends BasicBD {
 
@@ -98,23 +98,23 @@ public class AvvisoPagamento extends BasicBD {
 	public PrintAvvisoDTOResponse printAvviso(PrintAvvisoDTO printAvviso) {
 		PrintAvvisoDTOResponse response = new PrintAvvisoDTOResponse();
 
-		it.govpay.model.avvisi.AvvisoPagamento avvisoPagamento = printAvviso.getAvviso();
-		log.info("Creazione PDF Avviso Pagamento [Dominio: " + avvisoPagamento.getCodDominio() +" | IUV: " + avvisoPagamento.getIuv() + "]");
-		AvvisoPagamentoInput input = printAvviso.getInput();
-		AvvisoPagamentoProperties avProperties = AvvisoPagamentoProperties.getInstance();
-		try {
-			it.govpay.model.avvisi.AvvisoPagamento avvisoPagamentoResponse  = AvvisoPagamentoPdf.getInstance().creaAvviso(log, input, avvisoPagamento, avProperties);
-			
-			log.info("Salvataggio PDF Avviso Pagamento [Dominio: " + avvisoPagamento.getCodDominio() +" | IUV: " + avvisoPagamento.getIuv() + "] sul db in corso...");
-			// aggiornamento della entry sul db
-			AvvisiPagamentoBD avvisiBD = new AvvisiPagamentoBD(this);
-			avvisoPagamentoResponse.setStato(StatoAvviso.STAMPATO); 
-			avvisiBD.updateAvviso(avvisoPagamentoResponse);
-			log.info("Salvataggio PDF Avviso Pagamento [Dominio: " + avvisoPagamento.getCodDominio() +" | IUV: " + avvisoPagamento.getIuv() + "] sul db completato.");
-			response.setAvviso(avvisoPagamentoResponse);
-		} catch (Exception e) {
-			log.error("Creazione Pdf Avviso Pagamento fallito", e);
-		}
+//		it.govpay.model.avvisi.AvvisoPagamento avvisoPagamento = printAvviso.getAvviso();
+//		log.info("Creazione PDF Avviso Pagamento [Dominio: " + avvisoPagamento.getCodDominio() +" | IUV: " + avvisoPagamento.getIuv() + "]");
+//		AvvisoPagamentoInput input = printAvviso.getInput();
+//		AvvisoPagamentoProperties avProperties = AvvisoPagamentoProperties.getInstance();
+//		try {
+//			it.govpay.model.avvisi.AvvisoPagamento avvisoPagamentoResponse  = AvvisoPagamentoPdf.getInstance().creaAvviso(log, input, avvisoPagamento, avProperties);
+//			
+//			log.info("Salvataggio PDF Avviso Pagamento [Dominio: " + avvisoPagamento.getCodDominio() +" | IUV: " + avvisoPagamento.getIuv() + "] sul db in corso...");
+//			// aggiornamento della entry sul db
+//			AvvisiPagamentoBD avvisiBD = new AvvisiPagamentoBD(this);
+//			avvisoPagamentoResponse.setStato(StatoAvviso.STAMPATO); 
+//			avvisiBD.updateAvviso(avvisoPagamentoResponse);
+//			log.info("Salvataggio PDF Avviso Pagamento [Dominio: " + avvisoPagamento.getCodDominio() +" | IUV: " + avvisoPagamento.getIuv() + "] sul db completato.");
+//			response.setAvviso(avvisoPagamentoResponse);
+//		} catch (Exception e) {
+//			log.error("Creazione Pdf Avviso Pagamento fallito", e);
+//		}
 
 		return response;
 	}
