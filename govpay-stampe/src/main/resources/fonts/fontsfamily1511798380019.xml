@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fontFamilies>
+	<fontFamily name="Titillium Web">
+		<normal><![CDATA[fonts/TitilliumWeb/TitilliumWeb-SemiBold.ttf]]></normal>
+		<bold><![CDATA[fonts/TitilliumWeb/TitilliumWeb-Bold.ttf]]></bold>
+		<italic><![CDATA[fonts/TitilliumWeb/TitilliumWeb-Italic.ttf]]></italic>
+		<boldItalic><![CDATA[fonts/TitilliumWeb/TitilliumWeb-SemiBoldItalic.ttf]]></boldItalic>
+		<pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+	</fontFamily>
+</fontFamilies>

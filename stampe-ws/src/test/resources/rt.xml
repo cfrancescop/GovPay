@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RT xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+  <versioneOggetto>6.2</versioneOggetto>
+  <dominio>
+    <identificativoDominio>00514490010</identificativoDominio>
+    <identificativoStazioneRichiedente>CITYPAY-ANAGRAFE</identificativoStazioneRichiedente>
+  </dominio>
+  <identificativoMessaggioRicevuta>17896499</identificativoMessaggioRicevuta>
+  <dataOraMessaggioRicevuta>2017-09-27T09:13:30</dataOraMessaggioRicevuta>
+  <riferimentoMessaggioRichiesta>8282bb25b10d4993a83a7ed8b8974f77</riferimentoMessaggioRichiesta>
+  <riferimentoDataRichiesta>2017-09-27</riferimentoDataRichiesta>
+  <istitutoAttestante>
+    <identificativoUnivocoAttestante>
+      <tipoIdentificativoUnivoco>G</tipoIdentificativoUnivoco>
+      <codiceIdentificativoUnivoco>01806800676</codiceIdentificativoUnivoco>
+    </identificativoUnivocoAttestante>
+    <denominazioneAttestante>City Poste Payment</denominazioneAttestante>
+  </istitutoAttestante>
+  <enteBeneficiario>
+    <identificativoUnivocoBeneficiario>
+      <tipoIdentificativoUnivoco>G</tipoIdentificativoUnivoco>
+      <codiceIdentificativoUnivoco>00514490010</codiceIdentificativoUnivoco>
+    </identificativoUnivocoBeneficiario>
+    <denominazioneBeneficiario>Comune di Torino</denominazioneBeneficiario>
+  </enteBeneficiario>
+  <soggettoPagatore>
+    <identificativoUnivocoPagatore>
+      <tipoIdentificativoUnivoco>F</tipoIdentificativoUnivoco>
+      <codiceIdentificativoUnivoco>XXXXXXXXXXXXX</codiceIdentificativoUnivoco>
+    </identificativoUnivocoPagatore>
+    <anagraficaPagatore>QUADRATO MILANO</anagraficaPagatore>
+  </soggettoPagatore>
+  <datiPagamento>
+    <codiceEsitoPagamento>0</codiceEsitoPagamento>
+    <importoTotalePagato>5.68</importoTotalePagato>
+    <identificativoUnivocoVersamento>01730000000007113</identificativoUnivocoVersamento>
+    <CodiceContestoPagamento>1</CodiceContestoPagamento>
+    <datiSingoloPagamento>
+      <singoloImportoPagato>5.68</singoloImportoPagato>
+      <esitoSingoloPagamento>Pagamento eseguito</esitoSingoloPagamento>
+      <dataEsitoSingoloPagamento>2017-09-27</dataEsitoSingoloPagamento>
+      <identificativoUnivocoRiscossione>17896499</identificativoUnivocoRiscossione>
+      <causaleVersamento>/RFB/01730000000007113/5.68</causaleVersamento>
+      <datiSpecificiRiscossione>2/1402</datiSpecificiRiscossione>
+    </datiSingoloPagamento>
+  </datiPagamento>
+</RT>
