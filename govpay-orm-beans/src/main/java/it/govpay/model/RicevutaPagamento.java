@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class RicevutaPagamento {
-
+	
 	private Dominio dominioCreditore;
 	private Anagrafica anagraficaCreditore;
 	private Anagrafica anagraficaVersante;

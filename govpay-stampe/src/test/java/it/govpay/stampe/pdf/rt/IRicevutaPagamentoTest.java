@@ -37,7 +37,7 @@ public class IRicevutaPagamentoTest {
 			RicevutaPagamento ricevuta=new RicevutaPagamento();
 			ricevuta.setImportoPagato(BigDecimal.TEN);
 			Anagrafica anagraficaDebitore=new Anagrafica();
-			anagraficaDebitore.setCodUnivoco("PIRRONE FRANCESCO (PRRFNC91L10C349N)");
+			anagraficaDebitore.setCodUnivoco("PIRRONE FRANCESCO (CODICE FISCALE)");
 			Anagrafica anagraficaCreditore=new Anagrafica();
 			anagraficaCreditore.setCodUnivoco("Comune di Torino (00514490010)");
 			ricevuta.setAnagraficaCreditore(anagraficaCreditore);

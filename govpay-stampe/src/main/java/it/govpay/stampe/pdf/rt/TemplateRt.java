@@ -295,11 +295,13 @@ public class TemplateRt {
 				sb.append(MessageFormat.format(Costanti.PATTERN_NOME_DUE_PUNTI_VALORE,Costanti.LABEL_DATA_SCADENZA, TemplateBase.sdf_ddMMyyyy.format(ricevuta.getDataScadenza())));
 				addBreak = true;
 			}
-			String importoPagatoAsString = Costanti.LABEL_EURO+ String.format("%.2f",ricevuta.getImportoPagato().doubleValue()); 
+			
 			if(addBreak) 
 				sb.append("<br/>");
-
-			sb.append(MessageFormat.format(Costanti.PATTERN_NOME_DUE_PUNTI_VALORE,Costanti.LABEL_IMPORTO_PAGATO, importoPagatoAsString));
+			if(ricevuta.getImportoPagato()!=null) {
+				String importoPagatoAsString = Costanti.LABEL_EURO+ ricevuta.getImportoPagato().setScale(2).toString(); 
+				sb.append(MessageFormat.format(Costanti.PATTERN_NOME_DUE_PUNTI_VALORE,Costanti.LABEL_IMPORTO_PAGATO, importoPagatoAsString));
+			}
 			if(ricevuta.getCommissioni() != null){
 				String commissioniAsString = Costanti.LABEL_EURO+ String.format("%.2f",ricevuta.getCommissioni().doubleValue()); 
 				sb.append("<br/>");

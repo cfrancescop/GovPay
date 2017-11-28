@@ -20,6 +20,7 @@
 package it.govpay.model.avvisi;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -330,11 +331,11 @@ public class AvvisoPagamentoInput extends org.openspcoop2.utils.beans.BaseBean i
     this.avvisoMav = avvisoMav;
   }
 
-  public double getAvvisoImporto() {
+  public BigDecimal getAvvisoImporto() {
     return this.avvisoImporto;
   }
 
-  public void setAvvisoImporto(double avvisoImporto) {
+  public void setAvvisoImporto(BigDecimal avvisoImporto) {
     this.avvisoImporto = avvisoImporto;
   }
 
@@ -520,7 +521,7 @@ private static final long serialVersionUID = 1L;
 
   @javax.xml.bind.annotation.XmlSchemaType(name="double")
   @XmlElement(name="avviso_importo",required=true,nillable=false)
-  protected double avvisoImporto;
+  protected BigDecimal avvisoImporto;
 
   @javax.xml.bind.annotation.XmlSchemaType(name="string")
   @XmlElement(name="avviso_scadenza",required=true,nillable=false)

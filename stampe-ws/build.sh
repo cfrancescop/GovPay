@@ -1,7 +1,8 @@
 #!/bin/sh
 GROUP="it.govpay"
 NAME="stampe-ws"
-ID="$GROUP/$NAME"
+VERSION="latest"
+ID="$GROUP/$NAME:$VERSION"
 echo building $ID
 docker rmi $ID
 docker build -t $ID .

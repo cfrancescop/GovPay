@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.xml.sax.SAXException;
 
 import it.gov.digitpa.schemas._2011.pagamenti.CtRicevutaTelematica;
+import it.govpay.model.RicevutaPagamento;
 import it.govpay.stampews.PrintAvviso.Anagrafica;
 import it.govpay.stampews.PrintAvviso.Dominio;
 
@@ -41,6 +42,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.Date;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -71,14 +73,7 @@ public class StampeWsApplicationTests {
 		jaxbContext = JAXBContext.newInstance("it.gov.digitpa.schemas._2011.pagamenti:it.gov.digitpa.schemas._2011.pagamenti.revoche:it.gov.digitpa.schemas._2011.ws.paa:it.gov.digitpa.schemas._2011.psp:gov.telematici.pagamenti.ws.ppthead:it.govpay.servizi.pa");
 
     }
-	public static CtRicevutaTelematica toRT(InputStream is) throws JAXBException, SAXException {
-		
-		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-		jaxbUnmarshaller.setSchema(RPT_RT_schema);
-		JAXBElement<CtRicevutaTelematica> root = (JAXBElement<CtRicevutaTelematica>) jaxbUnmarshaller.unmarshal(is);
-		return root.getValue();
-	}
- 
+	
 
     @LocalServerPort
     private int port;
@@ -90,22 +85,23 @@ public class StampeWsApplicationTests {
     public void shouldWritePdfRT() throws InterruptedException, JAXBException, SAXException, FileNotFoundException, IOException, URISyntaxException {
         // registration has to take place...
         Thread.sleep(3000);
-        PrintRtRequest print=new PrintRtRequest();
-        CtRicevutaTelematica rt = toRT(this.getClass().getResourceAsStream("/rt.xml"));
-        print.setRt(rt);
-        print.setApplicationCode("STAMPE-WS-TEST");
-        print.setAuxDigit("1");
-        print.setCausale("JUNIT");
-        URL is = this.getClass().getResource("/00514490010.png");
-        byte[] readAllBytes = Files.readAllBytes(Paths.get(is.toURI()));
-        print.setLogoHex(Base64.getEncoder().encodeToString(readAllBytes));
+        RicevutaPagamento ricevuta=new RicevutaPagamento();
+		ricevuta.setImportoPagato(BigDecimal.TEN);
+				
+		it.govpay.model.Anagrafica cred=new it.govpay.model.Anagrafica();
+		cred.setCodUnivoco("Comune di Torino (00514490010)");
+		ricevuta.setAnagraficaCreditore(cred);
+		it.govpay.model.Anagrafica deb=new it.govpay.model.Anagrafica();
+		ricevuta.setAnagraficaDebitore(deb);
+		deb.setCodUnivoco("PIRRONE FRANCESCO (CODICE FISCALE)");
+		ricevuta.setDataPagamento(new Date());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-		HttpEntity<PrintRtRequest> request = new HttpEntity<>(print,headers);
+		HttpEntity<RicevutaPagamento> request = new HttpEntity<>(ricevuta,headers);
         ResponseEntity<byte[]> response =this.testRestTemplate.postForEntity("http://localhost:" + this.port + "/rt/pdf", request, byte[].class);
        
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        try(FileOutputStream out = new FileOutputStream("test.pdf")){
+        try(FileOutputStream out = new FileOutputStream("/tmp/test-rt-2.pdf")){
         	assertNotNull("NULL BODY",response.getBody());
         	out.write(response.getBody());
         }
@@ -115,10 +111,11 @@ public class StampeWsApplicationTests {
         // registration has to take place...
         Thread.sleep(3000);
         PrintAvviso print=new PrintAvviso();
-        print.setHexQrCode(Base64.getEncoder().encodeToString("1".getBytes()));
-        print.setHexBarCode(Base64.getEncoder().encodeToString("2".getBytes()));
+        print.setQrCode("1");
+        print.setBarCode("2");
         print.setImporto(BigDecimal.TEN);
         print.setIuv("IUVXXX");
+        print.setDataScadenza("28/11/2017");
         Anagrafica anagraficaCreditore=new Anagrafica();
         anagraficaCreditore.setLocalita("LOCALITA CREDITORE");
         anagraficaCreditore.setIndirizzo("VIA CREDITORE");
@@ -131,6 +128,8 @@ public class StampeWsApplicationTests {
 		anagraficaDebitore.setLocalita("TORINO");
 		anagraficaDebitore.setRagioneSociale("RAGIONE SOCIALE DEB");
 		anagraficaDebitore.setCodUnivoco("CODICE UNIVOCO DEB");
+		anagraficaDebitore.setIndirizzo("Via Alfieri 17");
+		anagraficaDebitore.setCap("10121 ");
 		print.setAnagraficaDebitore(anagraficaDebitore);
 		
 		Dominio dominioCreditore=new Dominio();
@@ -138,7 +137,6 @@ public class StampeWsApplicationTests {
 		dominioCreditore.setCodDominio("00514490010");
 	
 		
-//		dominioCreditore.setHexLogo(Base64.getEncoder().encodeToString(Files.readAllBytes(Paths.get(logo.getURI()))));
 		print.setDominioCreditore(dominioCreditore);
 		
         HttpHeaders headers = new HttpHeaders();
@@ -149,7 +147,7 @@ public class StampeWsApplicationTests {
         		.postForEntity(url, request, byte[].class);
        
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        try(FileOutputStream out = new FileOutputStream("test-avviso.pdf")){
+        try(FileOutputStream out = new FileOutputStream("/tmp/test-avviso.pdf")){
         	assertNotNull("NULL BODY",response.getBody());
         	out.write(response.getBody());
         }

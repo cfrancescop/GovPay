@@ -56,6 +56,9 @@ public class AvvisoPagamentoPdf {
 		propertiesAvvisoPerDominio = AvvisoPagamentoProperties.getInstance().getPropertiesPerDominio(codDominio, log);
 		caricaLoghiAvviso(input, propertiesAvvisoPerDominio);
 		JRDataSource dataSource = creaXmlDataSource(input);
+		if(input.getAvvisoQrcode() == null) {
+			throw new IllegalArgumentException("QR must not be null");
+		}
 		BitMatrix matrix = new com.google.zxing.qrcode.QRCodeWriter().encode(
 				input.getAvvisoQrcode(), com.google.zxing.BarcodeFormat.QR_CODE, 300, 300);
 		BufferedImage bufferedImage = com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(matrix);

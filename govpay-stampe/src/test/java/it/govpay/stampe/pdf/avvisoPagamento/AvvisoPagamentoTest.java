@@ -96,7 +96,7 @@ public class AvvisoPagamentoTest {
 		input.setIntestatarioIndirizzo2("50053 Empoli (FI)");
 		input.setAvvisoCausale(
 				"Pagamento diritti di segreteria per il rilascio in duplice copia della documentazione richiesta.");
-		input.setAvvisoImporto(9999999.99);
+		input.setAvvisoImporto(new BigDecimal("9999.99"));
 		input.setAvvisoScadenza("31/12/2020");
 		input.setAvvisoNumero("399000012345678900");
 		input.setAvvisoIuv("99000012345678900");

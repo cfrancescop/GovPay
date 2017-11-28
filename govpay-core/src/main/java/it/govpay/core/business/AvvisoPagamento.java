@@ -173,7 +173,7 @@ public class AvvisoPagamento extends BasicBD {
 		input.setAvvisoMav(false);
 		
 		if(versamento.getImportoTotale() != null)
-			input.setAvvisoImporto(versamento.getImportoTotale().doubleValue());
+			input.setAvvisoImporto(versamento.getImportoTotale());
 		
 		if(versamento.getDataScadenza() != null)
 			input.setAvvisoScadenza(this.sdfDataScadenza.format(versamento.getDataScadenza()));
