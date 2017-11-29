@@ -1,32 +1,21 @@
 package it.govpay.stampe.pdf.avvisoPagamento;
 
-import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
-
 import org.apache.logging.log4j.Logger;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.google.zxing.common.BitMatrix;
-
-import it.govpay.model.Anagrafica;
-import it.govpay.model.avvisi.AvvisoPagamento;
 import it.govpay.model.avvisi.AvvisoPagamentoInput;
-import it.govpay.model.Dominio;
-import it.govpay.model.avvisi.AvvisoPagamentoInput;
+import it.govpay.stampe.pdf.MissingConfigurationException;
 import it.govpay.stampe.pdf.avvisoPagamento.utils.AvvisoPagamentoProperties;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperPrint;
 
 public class AvvisoPagamentoTest {
 
@@ -43,39 +32,30 @@ public class AvvisoPagamentoTest {
 	}
 
 	@Test
-	public void testStampa() throws Exception {
-		try (FileOutputStream outputStream = new FileOutputStream("/tmp/tmp2.pdf")) {
+	public void testStampaAvviso() throws Exception {
+		try (FileOutputStream outputStream = new FileOutputStream("/tmp/avvisoPagoPA.pdf")) {
 			instance.exportToStream(createInput(), "83000390019", outputStream);
 		}
 
 	}
 
 	@Test
-	public void test() throws Exception {
-
-		AvvisoPagamento av = new AvvisoPagamento();
-		av.setCodDominio("83000390019");
-
-		InputStream jasperTemplateInputStream = this.getClass().getResourceAsStream("/AvvisoPagamento.jasper");// new
-																												// FileInputStream("/home/pintori/Downloads/Jasper_1/AvvisoPagamento.jasper");
-		final Map<String, Object> parameters = new HashMap<>();
-		AvvisoPagamentoInput input = createInput();
-		Properties propertiesAvvisoPerDominio;
-		propertiesAvvisoPerDominio = avProperties.getPropertiesPerDominio(av.getCodDominio(), log);
-		instance.caricaLoghiAvviso(input, propertiesAvvisoPerDominio);
-		JRDataSource dataSource = instance.creaXmlDataSource(input);
-		BitMatrix matrix = new com.google.zxing.qrcode.QRCodeWriter().encode(
-				input.getAvvisoQrcode(), com.google.zxing.BarcodeFormat.QR_CODE, 300, 300);
-		BufferedImage bufferedImage = com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(matrix);
-		parameters.put("qr_code", bufferedImage);
-		// System.out.println(bufferedImage);
-		JasperPrint jasperPrint = instance.creaJasperPrintAvviso(jasperTemplateInputStream, dataSource, parameters);
-		// JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
-		JasperExportManager.exportReportToPdfFile(jasperPrint, "/tmp/tmp.pdf");
-
-		// System.out.println(input.toXml_Jaxb());
-		System.out.println("FINE");
+	public void testLogiImage() throws UnsupportedEncodingException, MissingConfigurationException {
+		Map<String,Object> parameters = new HashMap<>();
+		
+		instance.caricaLoghiAvvisoFromProps(parameters, avProperties.getPropertiesPerDominio(null));
+		parameters.entrySet().forEach(entry -> {
+			InputStream is = (InputStream) entry.getValue();
+			String name = entry.getKey();
+			try {
+				Files.copy(is, Paths.get("/tmp",name+".png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 	}
+	
 
 	private AvvisoPagamentoInput createInput() {
 		AvvisoPagamentoInput input = new AvvisoPagamentoInput();

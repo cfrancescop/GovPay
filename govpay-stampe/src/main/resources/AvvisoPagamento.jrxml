@@ -13,12 +13,40 @@
 		<parameterDescription><![CDATA[QR Code Image]]></parameterDescription>
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="ente_logo" class="java.io.InputStream">
+		<parameterDescription><![CDATA[IL LOGO DELL'ENTE]]></parameterDescription>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="place_logo" class="java.io.InputStream">
+		<parameterDescription><![CDATA[IL LOGO DELL'ENTE]]></parameterDescription>
+	</parameter>
+	<parameter name="agid_logo" class="java.io.InputStream">
+		<parameterDescription><![CDATA[IL LOGO DI AGID]]></parameterDescription>
+	</parameter>
+	<parameter name="pagopa_logo" class="java.io.InputStream">
+		<parameterDescription><![CDATA[IL LOGO DI PAGOPA]]></parameterDescription>
+	</parameter>
+	<parameter name="app_logo" class="java.io.InputStream">
+		<parameterDescription><![CDATA[IL LOGO DELL'ENTE]]></parameterDescription>
+	</parameter>
+	<parameter name="importo_logo" class="java.io.InputStream">
+		<parameterDescription><![CDATA[IL LOGO DELL'ENTE]]></parameterDescription>
+	</parameter>
+	<parameter name="scadenza_logo" class="java.io.InputStream">
+		<parameterDescription><![CDATA[IL LOGO DELL'ENTE]]></parameterDescription>
+	</parameter>
+	<parameter name="pagopa90_logo" class="java.io.InputStream">
+		<parameterDescription><![CDATA[IL LOGO DELL'ENTE]]></parameterDescription>
+	</parameter>
+	<parameter name="taglio" class="java.io.InputStream">
+		<parameterDescription><![CDATA[IL LOGO DELL'ENTE]]></parameterDescription>
+	</parameter>
+	<parameter name="taglio1" class="java.io.InputStream">
+		<parameterDescription><![CDATA[IL LOGO DELL'ENTE]]></parameterDescription>
+	</parameter>
 	<queryString language="xPath">
 		<![CDATA[/input]]>
 	</queryString>
-	<field name="ente_logo" class="java.lang.String">
-		<fieldDescription><![CDATA[ente_logo]]></fieldDescription>
-	</field>
 	<field name="ente_denominazione" class="java.lang.String">
 		<fieldDescription><![CDATA[ente_denominazione]]></fieldDescription>
 	</field>
@@ -76,35 +104,8 @@
 	<field name="avviso_qrcode" class="java.lang.String">
 		<fieldDescription><![CDATA[avviso_qrcode]]></fieldDescription>
 	</field>
-	<field name="agid_logo" class="java.lang.String">
-		<fieldDescription><![CDATA[agid_logo]]></fieldDescription>
-	</field>
-	<field name="pagopa_logo" class="java.lang.String">
-		<fieldDescription><![CDATA[pagopa_logo]]></fieldDescription>
-	</field>
-	<field name="app_logo" class="java.lang.String">
-		<fieldDescription><![CDATA[app_logo]]></fieldDescription>
-	</field>
-	<field name="place_logo" class="java.lang.String">
-		<fieldDescription><![CDATA[place_logo]]></fieldDescription>
-	</field>
-	<field name="importo_logo" class="java.lang.String">
-		<fieldDescription><![CDATA[importo_logo]]></fieldDescription>
-	</field>
-	<field name="scadenza_logo" class="java.lang.String">
-		<fieldDescription><![CDATA[scadenza_logo]]></fieldDescription>
-	</field>
-	<field name="pagopa90_logo" class="java.lang.String">
-		<fieldDescription><![CDATA[pagopa90_logo]]></fieldDescription>
-	</field>
 	<field name="avviso_mav" class="java.lang.String">
 		<fieldDescription><![CDATA[avviso_mav]]></fieldDescription>
-	</field>
-	<field name="taglio" class="java.lang.String">
-		<fieldDescription><![CDATA[taglio]]></fieldDescription>
-	</field>
-	<field name="taglio1" class="java.lang.String">
-		<fieldDescription><![CDATA[taglio1]]></fieldDescription>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -149,7 +150,7 @@
 			</staticText>
 			<image hAlign="Right" vAlign="Middle">
 				<reportElement x="475" y="0" width="80" height="80" uuid="5076b5cb-7f3f-4b3c-aa71-eaf679bbeedf"/>
-				<imageExpression><![CDATA[new ByteArrayInputStream(Base64.decodeBase64((($F{pagopa_logo}.contains(','))?$F{pagopa_logo}.split(',')[1]:$F{pagopa_logo}).getBytes("UTF-8")))]]></imageExpression>
+				<imageExpression><![CDATA["pagopa_logo.png"]]></imageExpression>
 			</image>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="103" y="0" width="354" height="20" uuid="ac6dd009-1eb8-48ac-9068-891552297bd9"/>
@@ -169,12 +170,12 @@
 				</textElement>
 				<textFieldExpression><![CDATA[($F{ente_area}.equals(null))?"":$F{ente_area}.toUpperCase()]]></textFieldExpression>
 			</textField>
-			<image hAlign="Center" vAlign="Middle">
+			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
 				<reportElement x="0" y="0" width="80" height="80" uuid="bdf6b2dc-42a6-4837-880d-dab0bea89528">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<imageExpression><![CDATA[new ByteArrayInputStream(Base64.decodeBase64((($F{ente_logo}.contains(','))?$F{ente_logo}.split(',')[1]:$F{ente_logo}).getBytes("UTF-8")))]]></imageExpression>
+				<imageExpression><![CDATA[$P{ente_logo}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement positionType="Float" x="103" y="34" width="354" height="22" uuid="d954ad48-f978-4261-b4a4-37a3604aec47">
@@ -300,11 +301,11 @@
 			</textField>
 			<image hAlign="Center">
 				<reportElement x="123" y="287" width="45" height="36" uuid="c87ea5ec-6c1e-4e9a-a55b-1d123cc148ab"/>
-				<imageExpression><![CDATA[new ByteArrayInputStream(Base64.decodeBase64((($F{app_logo}.contains(','))?$F{app_logo}.split(',')[1]:$F{app_logo}).getBytes("UTF-8")))]]></imageExpression>
+				<imageExpression><![CDATA["app_logo.png"]]></imageExpression>
 			</image>
 			<image hAlign="Center">
 				<reportElement x="389" y="287" width="45" height="36" uuid="f306504a-fd3e-496a-9b63-51ba2719a7f2"/>
-				<imageExpression><![CDATA[new ByteArrayInputStream(Base64.decodeBase64((($F{place_logo}.contains(','))?$F{place_logo}.split(',')[1]:$F{place_logo}).getBytes("UTF-8")))]]></imageExpression>
+				<imageExpression><![CDATA["place_logo.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="10" y="334" width="270" height="18" forecolor="#FFFFFF" uuid="0d5b7259-f957-4513-827c-6ab4a49c46cf">
@@ -465,7 +466,7 @@
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<imageExpression><![CDATA[new ByteArrayInputStream(Base64.decodeBase64((($F{importo_logo}.contains(','))?$F{importo_logo}.split(',')[1]:$F{importo_logo}).getBytes("UTF-8")))]]></imageExpression>
+				<imageExpression><![CDATA["importo_logo.png"]]></imageExpression>
 			</image>
 			<ellipse>
 				<reportElement x="43" y="439" width="30" height="30" uuid="918affd9-a215-4a2e-8def-1c423b96552d">
@@ -511,7 +512,7 @@
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<imageExpression><![CDATA[new ByteArrayInputStream(Base64.decodeBase64((($F{scadenza_logo}.contains(','))?$F{scadenza_logo}.split(',')[1]:$F{scadenza_logo}).getBytes("UTF-8")))]]></imageExpression>
+				<imageExpression><![CDATA["scadenza_logo.png"]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">
 				<reportElement x="443" y="452" width="68" height="20" uuid="84579b0d-8b23-42f3-83e3-1875657cd91e">
@@ -563,7 +564,7 @@
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<imageExpression><![CDATA[new ByteArrayInputStream(Base64.decodeBase64((($F{pagopa90_logo}.contains(','))?$F{pagopa90_logo}.split(',')[1]:$F{pagopa90_logo}).getBytes("UTF-8")))]]></imageExpression>
+				<imageExpression><![CDATA["pagopa90_logo.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="103" y="88" width="354" height="19" uuid="7e0303af-37ef-4c49-93f1-3115d8ab0864"/>
@@ -599,11 +600,11 @@
 			</staticText>
 			<image onErrorType="Blank">
 				<reportElement x="491" y="413" width="30" height="20" uuid="12f7ae3e-cf65-4e6e-a7f7-298c16157329"/>
-				<imageExpression><![CDATA[new ByteArrayInputStream(Base64.decodeBase64((($F{taglio1}.contains(','))?$F{taglio1}.split(',')[1]:$F{taglio1}).getBytes("UTF-8")))]]></imageExpression>
+				<imageExpression><![CDATA["taglio1.png"]]></imageExpression>
 			</image>
 			<image onErrorType="Blank">
 				<reportElement x="34" y="651" width="30" height="20" uuid="27ccb204-c1bf-46d6-be21-a22faf694c3b"/>
-				<imageExpression><![CDATA[new ByteArrayInputStream(Base64.decodeBase64((($F{taglio}.contains(','))?$F{taglio}.split(',')[1]:$F{taglio}).getBytes("UTF-8")))]]></imageExpression>
+				<imageExpression><![CDATA["taglio.png"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement positionType="Float" x="0" y="785" width="554" height="13" uuid="e73589ee-59ad-494f-8e69-489ca7aeb210"/>
@@ -656,7 +657,7 @@
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box rightPadding="0"/>
-				<imageExpression><![CDATA[new ByteArrayInputStream(Base64.decodeBase64((($F{agid_logo}.contains(','))?$F{agid_logo}.split(',')[1]:$F{agid_logo}).getBytes("UTF-8")))]]></imageExpression>
+				<imageExpression><![CDATA["agid_logo.png"]]></imageExpression>
 			</image>
 		</band>
 	</detail>
