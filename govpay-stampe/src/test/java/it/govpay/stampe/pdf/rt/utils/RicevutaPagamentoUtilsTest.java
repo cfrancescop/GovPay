@@ -29,8 +29,8 @@ public class RicevutaPagamentoUtilsTest {
 		RicevutaPagamentoProperties.newInstance("");
 	}
 	@Test
-	public void test() throws Exception {
-		try(OutputStream osAPPdf = new FileOutputStream("testUtils.pdf")){
+	public void testRicevutaPagamento() throws Exception {
+		try(OutputStream osAPPdf = new FileOutputStream("/tmp/testUtils.pdf")){
 			RicevutaPagamento ricevuta=new RicevutaPagamento();
 			ricevuta.setImportoPagato(BigDecimal.TEN);
 			Dominio dominioCreditore=new Dominio();
@@ -45,22 +45,7 @@ public class RicevutaPagamentoUtilsTest {
 		//causale
 		//rt grezzo
 		
-		byte[] logoDominio=new byte[0];
-		Causale causale=new Causale() {
-			
-			@Override
-			public String getSimple() throws UnsupportedEncodingException {
-				// TODO Auto-generated method stub
-				return "TEST";
-			}
-			
-			@Override
-			public String encode() throws UnsupportedEncodingException {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		};
-		Path path = Paths.get(this.getClass().getResource("/rt.xml").toURI());
+		
 		
 		
 		RicevutaPagamento input=new RicevutaPagamento();
@@ -80,7 +65,7 @@ public class RicevutaPagamentoUtilsTest {
 		anagraficaCreditore.setNazione("Italia");
 		anagraficaCreditore.setLocalita("Collegno");
 		anagraficaCreditore.setTelefono("123456789");
-		String pathLoghi="src/test/resources";
+		
 		
 		
 		Dominio dominioCreditore=new Dominio();
