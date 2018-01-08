@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import it.govpay.model.RicevutaPagamento;
 import it.govpay.stampe.pdf.Costanti;
 import it.govpay.stampe.pdf.TemplateBase;
+import it.govpay.stampe.pdf.avvisoPagamento.utils.AvvisoPagamentoProperties;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.builder.component.VerticalListBuilder;
@@ -45,8 +46,8 @@ public class TemplateRt {
 			InputStream resourceLogoPagoPa = new ByteArrayInputStream(Base64.decodeBase64(Costanti.logoPagoPa));
 			StyleBuilder headerStyle = stl.style(TemplateBase.bold18LeftStyle); 
 			
-			if(ricevuta.getLogoDominioCreditore()!=null && ricevuta.getLogoDominioCreditore().length > 0){
-				lst.add(cmp.image(new ByteArrayInputStream(ricevuta.getLogoDominioCreditore())).setFixedDimension(90, 90).setHorizontalImageAlignment(HorizontalImageAlignment.LEFT)); 
+			if(ricevuta.getCodDominio()!=null ){
+				lst.add(cmp.image(AvvisoPagamentoProperties.getImmagineEnte(ricevuta.getCodDominio())).setFixedDimension(90, 90).setHorizontalImageAlignment(HorizontalImageAlignment.LEFT)); 
 			}else {
 				lst.add(cmp.text("   ").setFixedDimension(90, 90).setHorizontalTextAlignment(HorizontalTextAlignment.LEFT).setStyle(headerStyle.setLeftPadding(10)));
 			}
@@ -78,7 +79,7 @@ public class TemplateRt {
 		String sezione = "Sezione Creditore";
 		try{
 			HorizontalListBuilder listRiepilogo = cmp.horizontalList().setBaseStyle(stl.style(TemplateBase.fontStyle12).setLeftPadding(10).setHorizontalTextAlignment(HorizontalTextAlignment.LEFT)); 
-
+			// Debitore:
 			if(ricevuta.getAnagraficaDebitore() != null){
 				StringBuffer sb = new StringBuffer();
 				if(StringUtils.isNotEmpty(ricevuta.getAnagraficaDebitore().getRagioneSociale()))
@@ -92,7 +93,7 @@ public class TemplateRt {
 
 				TemplateBase.addElementoLista(listRiepilogo, Costanti.LABEL_DEBITORE, sb.toString(), true, false, true);
 			}
-			
+			// Creditore:
 			if(ricevuta.getAnagraficaCreditore() != null){
 				StringBuffer sb = new StringBuffer();
 				if(StringUtils.isNotEmpty(ricevuta.getAnagraficaCreditore().getRagioneSociale()))
@@ -106,6 +107,7 @@ public class TemplateRt {
 
 				TemplateBase.addElementoLista(listRiepilogo, Costanti.LABEL_CREDITORE, sb.toString(), true, false, true);
 			}
+			// Attestante:
 			if(ricevuta.getAnagraficaAttestante() != null){
 				StringBuffer sb = new StringBuffer();
 				if(StringUtils.isNotEmpty(ricevuta.getAnagraficaAttestante().getRagioneSociale()))
@@ -119,7 +121,7 @@ public class TemplateRt {
 
 				TemplateBase.addElementoLista(listRiepilogo, Costanti.LABEL_ATTESTANTE, sb.toString(), true, false, true);
 			}
-
+			// Versante: 
 			if(ricevuta.getAnagraficaVersante() != null){
 				StringBuffer sb = new StringBuffer();
 				if(StringUtils.isNotEmpty(ricevuta.getAnagraficaVersante().getRagioneSociale()))
@@ -132,6 +134,11 @@ public class TemplateRt {
 				}
 
 				TemplateBase.addElementoLista(listRiepilogo, Costanti.LABEL_VERSANTE, sb.toString(), true, false, true);
+			}
+			
+			if(ricevuta.getEsito() != null){
+				
+				TemplateBase.addElementoLista(listRiepilogo, "Esito", ricevuta.getEsito(), true, false, true);
 			}
 
 			return listRiepilogo.newRow().add(cmp.verticalGap(20)).newRow()
@@ -315,12 +322,12 @@ public class TemplateRt {
 				sb.append("<br/>");
 				sb.append(MessageFormat.format(Costanti.PATTERN_NOME_DUE_PUNTI_VALORE,Costanti.LABEL_IUV, ricevuta.getIuv()));
 			}
-			/*
+			
 			if(StringUtils.isNotEmpty(ricevuta.getCcp())){
 				sb.append("<br/>");
 				sb.append(MessageFormat.format(Costanti.PATTERN_NOME_DUE_PUNTI_VALORE,Costanti.LABEL_CCP, ricevuta.getCcp()));
 			}
-			*/
+			
 			if(StringUtils.isNotEmpty(ricevuta.getIdRiscossione())){
 				sb.append("<br/>");
 				sb.append(MessageFormat.format(Costanti.PATTERN_NOME_DUE_PUNTI_VALORE,Costanti.LABEL_ID_RISCOSSIONE, ricevuta.getIdRiscossione()));

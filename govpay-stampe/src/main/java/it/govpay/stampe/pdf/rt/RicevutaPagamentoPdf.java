@@ -33,13 +33,13 @@ public class RicevutaPagamentoPdf implements IRicevutaPagamento{
 			ComponentBuilder<?, ?> createTitleComponent = TemplateRt.createTitleComponent(ricevuta,errList,log);
 			if(createTitleComponent != null) {
 				cl.add(createTitleComponent);
-
+				// Aggiunge Debitore,Creditore,Attestante ed esito 
 				ComponentBuilder<?,?> createSezioneCreditore = TemplateRt.createSezioneCreditore(ricevuta, errList, log);
 				cl.add(createSezioneCreditore);
 
 //				ComponentBuilder<?,?> createSezioneTitoloRicevuta = TemplateRt.createSezioneTitoloRicevuta(ricevuta, errList, log);
 //				cl.add(createSezioneTitoloRicevuta);
-
+				// aggiunge la parte degli importi
 				ComponentBuilder<?,?> createSezioneImporti = TemplateRt.createSezioneImporti(ricevuta, errList, log); 
 
 				if(createSezioneImporti != null)

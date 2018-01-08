@@ -7,13 +7,8 @@ public class PrintRtRequest {
 	String causale;
 	String auxDigit;
 	String applicationCode;
-	String logoHex;
-	public String getLogoHex() {
-		return logoHex;
-	}
-	public void setLogoHex(String logoHex) {
-		this.logoHex = logoHex;
-	}
+	private String esito;
+	
 	
 	public String getCausale() {
 		return causale;
@@ -38,5 +33,11 @@ public class PrintRtRequest {
 	}
 	public void setRt(CtRicevutaTelematica rt) {
 		this.rt = rt;
+	}
+	public String getEsito() {
+		return esito;
+	}
+	public void setEsito(String esito) {
+		this.esito = esito;
 	}
 }

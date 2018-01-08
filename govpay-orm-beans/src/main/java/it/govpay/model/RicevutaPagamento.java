@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class RicevutaPagamento {
-	
+	private String esito;
 	private Dominio dominioCreditore;
 	private Anagrafica anagraficaCreditore;
 	private Anagrafica anagraficaVersante;
@@ -152,6 +152,12 @@ public class RicevutaPagamento {
 	}
 	public void setLogoDominioCreditore(byte[] logoDominioCreditore) {
 		this.logoDominioCreditore = logoDominioCreditore;
+	}
+	public String getEsito() {
+		return esito;
+	}
+	public void setEsito(String esito) {
+		this.esito = esito;
 	}
 	
 }
