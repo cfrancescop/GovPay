@@ -34,6 +34,8 @@ public class StampeWsApplication {
 	IRicevutaPagamento iRicevutaPagamento;
 	@Autowired
 	RicevutaPagamentoProperties ricevutaPagamentoProperties;
+	@Autowired
+	QuietanzaReport quietanzaReport;
 	public static void main(String[] args) {
 		try {
 			SpringApplication.run(StampeWsApplication.class, args);
@@ -68,6 +70,14 @@ public class StampeWsApplication {
 
 		Properties propertiesAvvisoPagamentoDominioTributo = RicevutaPagamentoUtils.getRicevutaPagamentoPropertiesPerDominioTributo(ricevutaPagamentoProperties, ricevuta.getCodDominio(), log);
 		iRicevutaPagamento.getPdfRicevutaPagamento(ricevuta, propertiesAvvisoPagamentoDominioTributo, os, log);
+		return os.toByteArray();
+	}
+	
+	@PostMapping(path = "/quietanza/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+	public byte[] printPdfQuietanza(@RequestBody StampaQuietanza quietanza) throws IOException, Exception {
+		log.info("Print Quietanza");
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		quietanzaReport.exportToStream(quietanza, os);
 		return os.toByteArray();
 	}
 
