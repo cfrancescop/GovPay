@@ -203,27 +203,27 @@
 		</band>
 	</title>
 	<detail>
-		<band height="67">
+		<band height="72">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="FixRelativeToBottom" x="30" y="12" width="338" height="28" uuid="4ce6c4ed-8841-4dfd-84a6-69d073a682c8"/>
-				<textElement>
+			<textField isBlankWhenNull="true">
+				<reportElement x="30" y="10" width="330" height="28" uuid="4ce6c4ed-8841-4dfd-84a6-69d073a682c8"/>
+				<textElement verticalAlignment="Top">
 					<font fontName="Titillium Web" size="14" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{causale}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="368" y="12" width="165" height="28" uuid="b597073a-636c-4e28-b582-19e346a00b3f"/>
-				<textElement>
+				<reportElement positionType="Float" x="368" y="10" width="165" height="30" uuid="b597073a-636c-4e28-b582-19e346a00b3f"/>
+				<textElement verticalAlignment="Top">
 					<font fontName="Titillium Web" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["€ "+ $F{importo}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="30" y="32" width="338" height="27" uuid="14e71918-49b6-49cb-96de-cb1cf547dc44"/>
-				<textElement>
-					<font fontName="Titillium Web" size="14" isBold="false" isItalic="true"/>
+				<reportElement stretchType="ContainerHeight" x="30" y="40" width="380" height="27" isRemoveLineWhenBlank="true" uuid="14e71918-49b6-49cb-96de-cb1cf547dc44"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Titillium Web" size="12" isBold="false" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{descrizione}]]></textFieldExpression>
 			</textField>
@@ -232,7 +232,7 @@
 	<summary>
 		<band height="56">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="380" y="10" width="165" height="30" uuid="ff9cc573-464d-416b-84e6-52cf2c252568"/>
+				<reportElement positionType="Float" x="368" y="10" width="177" height="30" uuid="ff9cc573-464d-416b-84e6-52cf2c252568"/>
 				<textElement>
 					<font fontName="Titillium Web" size="14" isBold="true"/>
 				</textElement>
