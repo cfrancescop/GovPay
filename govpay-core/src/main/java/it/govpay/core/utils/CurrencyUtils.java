@@ -45,10 +45,6 @@ public class CurrencyUtils {
 	private Logger log = null;
 	private boolean mostraVirgole = false;
 	private Locale locale = null;
-	
-	public static CurrencyUtils getInstance() {
-		return newInstance(LogManager.getLogger());
-	}
 	 
 	public static CurrencyUtils newInstance(Logger log) {
 		return new CurrencyUtils(log,null);

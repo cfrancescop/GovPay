@@ -38,10 +38,51 @@ public class AvvisoPagamentoPdf {
 		return _instance;
 	}
 
-	public static synchronized void init() {
-		if(_instance == null)
-			_instance = new AvvisoPagamentoPdf();
-	}
+import it.govpay.model.AvvisoPagamento;
+import it.govpay.stampe.pdf.TemplateBase;
+import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
+import net.sf.dynamicreports.jasper.builder.export.JasperPdfExporterBuilder;
+import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
+import net.sf.dynamicreports.report.constant.PageOrientation;
+import net.sf.dynamicreports.report.constant.PageType;
+
+public class AvvisoPagamentoPdf implements IAvvisoPagamento{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L; 
+	
+	public String getPdfAvvisoPagamento(String pathLoghi, AvvisoPagamento avviso, Properties properties, OutputStream os, Logger log) throws Exception {
+		String msg = null;
+		List<String> errList = new ArrayList<String>();
+		try{
+			JasperPdfExporterBuilder pdfExporter = export.pdfExporter(os);
+			JasperReportBuilder report = report();
+
+			List<ComponentBuilder<?, ?>> cl = new ArrayList<ComponentBuilder<?,?>>();
+
+			ComponentBuilder<?, ?> createTitleComponent = TemplateAvvisoPagamento.createTitleComponent(pathLoghi,avviso,errList,log);
+			if(createTitleComponent != null) {
+				cl.add(createTitleComponent);
+
+
+				ComponentBuilder<?,?> createSezioneDebitore = TemplateAvvisoPagamento.createSezioneDebitore(avviso, errList, log);
+				cl.add(createSezioneDebitore);
+
+				ComponentBuilder<?,?> createSezioneTitoloAvviso = TemplateAvvisoPagamento.createSezioneTitoloAvviso(avviso, errList, log);
+				cl.add(createSezioneTitoloAvviso);
+
+				ComponentBuilder<?,?> createSezionePagamento = TemplateAvvisoPagamento.createSezionePagamento(avviso, errList, log); 
+
+				if(createSezionePagamento != null)
+					cl.add(createSezionePagamento);
+			}
+
+			// se ho generato almeno il titolo allora produco il pdf.
+			if(cl.size() > 0){
+
+				ComponentBuilder<?, ?>[] ca = new ComponentBuilder<?, ?>[cl.size()];
 
 	public AvvisoPagamentoPdf() {
 

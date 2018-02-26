@@ -19,11 +19,8 @@ public class IncassoConverter {
 			dto.setDataValuta(vo.getDataValuta());
 			dto.setDispositivo(vo.getNomeDispositivo());
 			dto.setId(vo.getId());
-			if(vo.getIdApplicazione() != null)
+			if(vo.getIdApplicazione()!= null)
 				dto.setIdApplicazione(vo.getIdApplicazione().getId());
-			if(vo.getIdOperatore() != null)
-				dto.setIdApplicazione(vo.getIdOperatore().getId());
-			
 			dto.setImporto(BigDecimal.valueOf(vo.getImporto()));
 			dto.setTrn(vo.getTrn());
 			

@@ -313,8 +313,10 @@ public class IncassiHandler extends DarsHandler<Incasso> implements IDarsHandler
 					boolean eseguiRicerca = !setDomini.isEmpty();
 
 					if(eseguiRicerca) {
-						if(!setDomini.contains(-1L))
-							idDomini.addAll(setDomini);						
+						if(!setDomini.contains(-1L)) {
+							idDomini.addAll(setDomini);	
+							filter.setIdDomini(idDomini);
+						}					
 
 						domini.add(new Voce<Long>(Utils.getInstance(this.getLanguage()).getMessageFromResourceBundle("commons.label.qualsiasi"), -1L));
 						FilterSortWrapper fsw = new FilterSortWrapper();
@@ -722,6 +724,8 @@ public class IncassiHandler extends DarsHandler<Incasso> implements IDarsHandler
 			this.log.info("Esecuzione " + methodName + " completata.");
 
 			return fileName;
+		}catch(ExportException e){
+			throw e;
 		}catch(WebApplicationException e){
 			throw e;
 		}catch(Exception e){
@@ -792,6 +796,8 @@ public class IncassiHandler extends DarsHandler<Incasso> implements IDarsHandler
 			this.log.info("Esecuzione " + methodName + " completata.");
 
 			return fileName;
+		}catch(ExportException e){
+			throw e;
 		}catch(WebApplicationException e){
 			throw e;
 		}catch(Exception e){
