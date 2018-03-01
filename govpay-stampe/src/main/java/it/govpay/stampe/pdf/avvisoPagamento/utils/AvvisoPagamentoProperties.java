@@ -44,7 +44,13 @@ public class AvvisoPagamentoProperties {
 		instance = new AvvisoPagamentoProperties(govpayResourceDir);
 		return instance;
 	}
-
+	
+	
+	/**
+	 * Restiuisce un input stream all'immagine del dominio.Se nessuna immagine e' presente recupera il logo della repubblica italiana
+	 * @param codDominio
+	 * @return
+	 */
 	public static InputStream getImmagineEnte(String codDominio) {
 		String dir = instance.govpayResourceDir;
 		

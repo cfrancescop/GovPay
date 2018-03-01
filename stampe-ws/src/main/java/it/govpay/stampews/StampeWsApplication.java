@@ -8,9 +8,26 @@ import java.util.Properties;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration;
+import org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration;
+import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.DispatcherServletAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.EmbeddedServletContainerAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.HttpEncodingAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.HttpMessageConvertersAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.ServerPropertiesAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,8 +42,12 @@ import it.govpay.stampe.pdf.rt.IRicevutaPagamento;
 import it.govpay.stampe.pdf.rt.utils.RicevutaPagamentoProperties;
 import it.govpay.stampe.pdf.rt.utils.RicevutaPagamentoUtils;
 
-@SpringBootApplication
+@SpringBootConfiguration
+@ComponentScan(basePackageClasses=StampeWsApplication.class)
+@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class,FreeMarkerAutoConfiguration.class})
+//@SpringBootApplication
 @RestController
+
 public class StampeWsApplication {
 	private static final Logger log = org.apache.logging.log4j.LogManager.getLogger(StampeWsApplication.class);
 	@Autowired AvvisoPagamentoPdf avvisoPagamentoPdf;

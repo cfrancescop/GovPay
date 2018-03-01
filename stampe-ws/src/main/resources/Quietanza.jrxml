@@ -23,6 +23,10 @@
 	<parameter name="totale" class="java.math.BigDecimal">
 		<defaultValueExpression><![CDATA[0.00]]></defaultValueExpression>
 	</parameter>
+	<parameter name="avviso_iuv" class="java.lang.String"/>
+	<parameter name="avviso_numero" class="java.lang.String"/>
+	<parameter name="avviso_data_pagamento" class="java.lang.String"/>
+	<parameter name="avviso_data_emissione" class="java.lang.String"/>
 	<queryString language="json">
 		<![CDATA[causali]]>
 	</queryString>
@@ -42,7 +46,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="170">
+		<band height="286">
 			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
 				<reportElement x="0" y="0" width="80" height="80" uuid="bdf6b2dc-42a6-4837-880d-dab0bea89528">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -200,6 +204,86 @@
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
+			<staticText>
+				<reportElement x="80" y="200" width="201" height="20" forecolor="#000000" uuid="4babe8a5-3ca2-476c-bfc0-a6f13d3d92a5">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Titillium Web" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Codice IUV]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="280" y="200" width="200" height="20" forecolor="#000000" uuid="cb223c9e-202a-4b1f-b757-78988399e1b2">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Titillium Web" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{avviso_iuv}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="280" y="180" width="200" height="20" forecolor="#000000" uuid="42a6a72d-5ed4-4dae-b12b-820d20aad824">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Titillium Web" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{avviso_numero}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="80" y="180" width="201" height="20" forecolor="#000000" uuid="86aecfa4-7375-4325-a667-053f4c9b2a18">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Titillium Web" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Codice avviso di pagamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="220" width="201" height="20" forecolor="#000000" uuid="0cf7c3c8-238c-4848-b119-f9b772a57841">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Titillium Web" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Data pagamento]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="280" y="220" width="200" height="20" forecolor="#000000" uuid="0c32a002-0db5-4d75-a69e-3a14a1b4d64d">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Titillium Web" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{avviso_data_pagamento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="280" y="240" width="200" height="20" forecolor="#000000" uuid="6ea09611-c5dc-4cbf-8b26-9320956ed9c7">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Titillium Web" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{avviso_data_emissione}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="80" y="240" width="201" height="20" forecolor="#000000" uuid="ce9a458f-ba6e-48e2-b734-7f6d0ce1e81f">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Titillium Web" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Data di emissione]]></text>
+			</staticText>
 		</band>
 	</title>
 	<detail>

@@ -23,6 +23,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JsonDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
+import static org.apache.commons.lang3.StringUtils.trimToEmpty;
 @Component
 public class QuietanzaReport {
 	@Autowired
@@ -43,11 +44,16 @@ public class QuietanzaReport {
 		parameters.put("ente_denominazione",StringUtils.trimToEmpty( input.getEnteDenominazione()));
 		parameters.put("totale", input.getTotale() != null ? input.getTotale() : BigDecimal.ZERO);
 		
-		parameters.put("ente_identificativo", StringUtils.trimToEmpty(input.getEnteIndentificativo()));
-		parameters.put("intestatario_denominazione",StringUtils.trimToEmpty( input.getIntestatarioDenominazione()));
-		parameters.put("intestatario_identificativo",StringUtils.trimToEmpty( input.getIntestatarioIdentificativo()));
-		parameters.put("intestatario_indirizzo_1",StringUtils.trimToEmpty( input.getIntestatarioIndirizzo()));
-		parameters.put("intestatario_indirizzo_2",StringUtils.trimToEmpty(  input.getIntestatarioArea()));
+		parameters.put("avviso_iuv",trimToEmpty(input.getIuv()) );
+		parameters.put("avviso_numero",trimToEmpty(input.getCodiceAvviso()) );
+		parameters.put("avviso_data_pagamento",trimToEmpty(input.getDataPagamento()) );
+		parameters.put("avviso_data_emissione",trimToEmpty(input.getDataEmissione()) );
+		
+		parameters.put("ente_identificativo", trimToEmpty(input.getEnteIndentificativo()));
+		parameters.put("intestatario_denominazione",trimToEmpty( input.getIntestatarioDenominazione()));
+		parameters.put("intestatario_identificativo",trimToEmpty( input.getIntestatarioIdentificativo()));
+		parameters.put("intestatario_indirizzo_1",trimToEmpty( input.getIntestatarioIndirizzo()));
+		parameters.put("intestatario_indirizzo_2",trimToEmpty(  input.getIntestatarioArea()));
 		// inserisce il logo di defaul(Rep. Italiana)
 		JasperPrint jasperPrint = creaJasperPrintAvviso(jasperTemplateInputStream, dataSource, parameters);
 		JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);

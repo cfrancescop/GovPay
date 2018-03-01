@@ -42,6 +42,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.Base64;
 import java.util.Date;
 
@@ -159,8 +160,12 @@ public class StampeWsApplicationTests {
 	@Test
 	public void testShouldWriteQuietanza() throws FileNotFoundException, IOException {
 		StampaQuietanza request = new StampaQuietanza();
-		
+		request.setCodiceAvviso("AVVISO");
+		request.setIuv("IUV");
+		request.setDataEmissione(LocalDate.now().toString());
+		request.setDataPagamento(LocalDate.now().toString());
 		request.setEnteArea("Comune di Torino");
+		
 		request.setEnteDenominazione("Anagrafe Centrale");
 		request.setEnteIndentificativo("00514490010");
 		request.setTotale(BigDecimal.TEN);
@@ -170,7 +175,7 @@ public class StampeWsApplicationTests {
 		VoceQuietanza a = new VoceQuietanza();
 		a.setCausale("Causale 1");
 		a.setDescrizione("Descrizione Esempio 1");
-		a.setImporto(BigDecimal.TEN);
+		a.setImporto("12.10");
 		request.getCausali().add(a);
 		request.getCausali().add(a);
 		request.getCausali().add(a);
